@@ -14,7 +14,7 @@ import org.apache.commons.lang3.tuple.Pair;
 public class MainExceptionHandler {
 
     @NonNull
-    private final Map<
+    protected final Map<
             Pair<Class<? extends Exception>, Class<? extends Command>>,
             CommandExceptionHandler
             > exceptionAndCommand2Handler;
@@ -25,9 +25,9 @@ public class MainExceptionHandler {
         Class<? extends Command> cClass = executedCommand.getClass();
 
         List<CommandExceptionHandler> existHandlers = Stream.of(
-                        exceptionAndCommand2Handler.get(Pair.of(eClass, cClass)),
-                        exceptionAndCommand2Handler.get(Pair.of(null, cClass)),
-                        exceptionAndCommand2Handler.get(Pair.of(eClass, null))
+                        exceptionAndCommand2Handler.get(Pair.of(eClass, cClass)), // Обработчик на команду и исключение
+                        exceptionAndCommand2Handler.get(Pair.of(null, cClass)), // Обработчик только на команду
+                        exceptionAndCommand2Handler.get(Pair.of(eClass, null)) // Обработчик только на исключение
                 )
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
